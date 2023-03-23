@@ -41,7 +41,7 @@ public class UniversitiesAPI {
 			
 			// Parse the JSON string into a Java object using Gson library
 			Gson gson = new Gson();
-			MyObject myObj = gson.fromJson(json.toString(), MyObject.class);
+			UniObject myObj = gson.fromJson(json.toString(), UniObject.class);
 			
 			// TODO: Use myObj for further processing (e.g. print university names, etc.)
 
