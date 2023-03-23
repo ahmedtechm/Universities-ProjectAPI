@@ -38,7 +38,7 @@ public class MainClass {
 
 	        while (running) {
 	            System.out.println("\nPlease choose an option:");
-	            System.out.println("1. Initialize database");
+	            System.out.println("\n1. Initialize database");
 	            System.out.println("2. Fetch data from API");
 	            System.out.println("3. Fetch data from database");
 	            System.out.println("4. Print universities");
@@ -55,38 +55,47 @@ public class MainClass {
 				switch (choice) {
                 case 1:
                     System.out.println("Initializing database...");
+                    initializeDatabase();
                     
                     break;
                 case 2:
                     System.out.println("Fetching data from API...");
+                    fetchDataFromAPI();
                    
                     break;
                 case 3:
                     System.out.println("Fetching data from database...");
+                    fetchDataFromDatabase();
                     
                     break;
                 case 4:
                     System.out.println("Printing universities...");
+                    printUniversities();
                    
                     break;
                 case 5:
                     System.out.println("Searching universities By Country...");
+                    SearchUniversitiesByCountry();
                     
                     break;
                 case 6:
                     System.out.println("Backing up database...");
+                    BackupDatabase();
                     
                     break;
                 case 7:
                     System.out.println("Removing tables from database...");
+                    RemoveTablesFromDatabase();
                     
                     break;
                 case 8:
                     System.out.println("Dumping data to file...");
+                    DumpDataToFile();
                
                     break;
                 case 9:
                     System.out.println("Retrieving data from file...");
+                    RetrieveDataFromFile();
             
                     break;
                 case 10:
@@ -101,6 +110,45 @@ public class MainClass {
 
         scanner.close();
 
+	}
+	
+	// Helper methods for each menu option
+
+	private static void initializeDatabase() {
+		
+	}
+	
+	private static void fetchDataFromAPI() {
+	    
+	}
+
+	private static void fetchDataFromDatabase() {
+	    
+	}
+
+	private static void printUniversities() {
+	   
+	}
+
+
+	private static void SearchUniversitiesByCountry() {
+		
+	}
+	
+	private static void BackupDatabase() {
+		
+	}
+	
+	private static void RemoveTablesFromDatabase() {
+		
+	}
+	
+	private static void DumpDataToFile() {
+		
+	}
+	
+	private static void RetrieveDataFromFile() {
+		
 	}
 
 }
