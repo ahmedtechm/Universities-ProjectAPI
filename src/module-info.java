@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author Lenovo
- *
- */
-module UniversitiesProjectAPI {
-}
