@@ -33,6 +33,26 @@ public class MainClass {
 
 		Connection connection = null;
 
-	}
+		
+		 boolean running = true;
+
+	        while (running) {
+	            System.out.println("\nPlease choose an option:");
+	            System.out.println("1. Initialize database");
+	            System.out.println("2. Fetch data from API");
+	            System.out.println("3. Fetch data from database");
+	            System.out.println("4. Print universities");
+	            System.out.println("5. Search universities By Country");
+	            System.out.println("6. Backup database");
+	            System.out.println("7. Remove tables from database");
+	            System.out.println("8. Dump data to file");
+	            System.out.println("9. Retrieve data from file");
+	            System.out.println("10. Exit program");
+				System.out.print("\nEnter your choice: ");
+
+				int choice = scanner.nextInt();
+
+
+	}}
 
 }
