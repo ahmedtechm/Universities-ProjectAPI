@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.util.List;
 import java.util.Scanner;
 
 public class MainClass {
@@ -116,32 +115,34 @@ public class MainClass {
 
 	// Helper methods for each menu option
 
-	private static void initializeDatabase() {
+	private static void initializeDatabase () {
+		
+        try {
+            String dbName = "universityDB";
+            String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=" + dbName + ";" + "encrypt=true;"
+                    + "trustServerCertificate=true";
 
-		try {
-			String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=universityDB;" + "encrypt=true;"
-					+ "trustServerCertificate=true";
-			
-			String userID = "sa";
-			String passID = "root";
-			
-			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-			DriverManager.registerDriver(driver);
+            String userID = "sa";
+            String passID = "root";
 
-			Connection connection = DriverManager.getConnection(url, userID, passID);
-			Statement statement = connection.createStatement();
+            Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+            DriverManager.registerDriver(driver);
 
-			String sql = "CREATE TABLE University (state_province VARCHAR(255), Name VARCHAR(255), Country VARCHAR(255),  "
-					+ "AlphaTwoCode VARCHAR(2), Domains VARCHAR(255)," + "WebPages VARCHAR(255));"
-					+ "CREATE TABLE countries (Name VARCHAR(255), AlphaTwoCode VARCHAR(2))";
-			statement.executeUpdate(sql);
+            Connection connection = DriverManager.getConnection(url, userID, passID);
+            Statement statement = connection.createStatement();
 
-			System.out.println("\nexecute completed");
-		} catch (Exception ex) {
-			System.err.println(ex);
-		}
+            String createUniversityTable = "CREATE TABLE IF NOT EXISTS University (state_province VARCHAR(255), Name VARCHAR(255), Country VARCHAR(255), "
+                    + "AlphaTwoCode VARCHAR(2), Domains VARCHAR(255), WebPages VARCHAR(255))";
+            statement.executeUpdate(createUniversityTable);
 
-	}
+            String createCountriesTable = "CREATE TABLE IF NOT EXISTS countries (Name VARCHAR(255), AlphaTwoCode VARCHAR(2))";
+            statement.executeUpdate(createCountriesTable);
+
+            System.out.println("\nDatabase initialization completed.");
+        } catch (Exception ex) {
+            System.err.println(ex);
+        }
+    }
 
 	private static void fetchDataFromAPI() {
 
