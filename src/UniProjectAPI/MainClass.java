@@ -7,6 +7,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -177,6 +178,50 @@ public class MainClass {
 	}
 
 	private static void fetchDataFromDatabase() {
+		
+		try {
+			String dbName = "universityDB";
+			String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=" + dbName + ";" + "encrypt=true;"
+			+ "trustServerCertificate=true";
+			String userID = "sa";
+			String passID = "root";
+		
+		Connection connection = DriverManager.getConnection(url, userID, passID);
+		Statement statement = connection.createStatement();
+
+		String selectUniversitiesQuery = "SELECT * FROM University";
+		ResultSet universitiesResultSet = statement.executeQuery(selectUniversitiesQuery);
+
+		System.out.println("\nUniversity data in the database:");
+		while (universitiesResultSet.next()) {
+			String state_province = universitiesResultSet.getString("state_province");
+			String name = universitiesResultSet.getString("Name");
+			String country = universitiesResultSet.getString("Country");
+			String alphaTwoCode = universitiesResultSet.getString("AlphaTwoCode");
+			String domains = universitiesResultSet.getString("Domains");
+			String webPages = universitiesResultSet.getString("WebPages");
+
+			System.out.println(state_province + " | " + name + " | " + country + " | " + alphaTwoCode + " | " + domains
+					+ " | " + webPages);
+		}
+
+		String selectCountriesQuery = "SELECT * FROM countries";
+		ResultSet countriesResultSet = statement.executeQuery(selectCountriesQuery);
+
+		System.out.println("\nCountry data in the database:");
+		while (countriesResultSet.next()) {
+			String name = countriesResultSet.getString("Name");
+			String alphaTwoCode = countriesResultSet.getString("AlphaTwoCode");
+
+			System.out.println(name + " | " + alphaTwoCode);
+		}
+
+		statement.close();
+		connection.close();
+	} catch (SQLException ex) {
+		System.err.println(ex);
+	}
+
 
 	}
 
