@@ -1,8 +1,13 @@
 package UniProjectAPI;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
 
@@ -115,37 +120,60 @@ public class MainClass {
 
 	// Helper methods for each menu option
 
-	private static void initializeDatabase () {
-		
-        try {
-            String dbName = "universityDB";
-            String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=" + dbName + ";" + "encrypt=true;"
-                    + "trustServerCertificate=true";
+	private static void initializeDatabase() {
 
-            String userID = "sa";
-            String passID = "root";
+		try {
+			String dbName = "universityDB";
+			String url = "jdbc:sqlserver://localhost:1433;" + "databaseName=" + dbName + ";" + "encrypt=true;"
+					+ "trustServerCertificate=true";
 
-            Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
-            DriverManager.registerDriver(driver);
+			String userID = "sa";
+			String passID = "root";
 
-            Connection connection = DriverManager.getConnection(url, userID, passID);
-            Statement statement = connection.createStatement();
+			Driver driver = (Driver) Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver").newInstance();
+			DriverManager.registerDriver(driver);
 
-            String createUniversityTable = "CREATE TABLE IF NOT EXISTS University (state_province VARCHAR(255), Name VARCHAR(255), Country VARCHAR(255), "
-                    + "AlphaTwoCode VARCHAR(2), Domains VARCHAR(255), WebPages VARCHAR(255))";
-            statement.executeUpdate(createUniversityTable);
+			Connection connection = DriverManager.getConnection(url, userID, passID);
+			Statement statement = connection.createStatement();
 
-            String createCountriesTable = "CREATE TABLE IF NOT EXISTS countries (Name VARCHAR(255), AlphaTwoCode VARCHAR(2))";
-            statement.executeUpdate(createCountriesTable);
+			String createUniversityTable = "CREATE TABLE  University (state_province VARCHAR(255), Name VARCHAR(255), Country VARCHAR(255), "
+					+ "AlphaTwoCode VARCHAR(2), Domains VARCHAR(255), WebPages VARCHAR(255))";
+			statement.executeUpdate(createUniversityTable);
 
-            System.out.println("\nDatabase initialization completed.");
-        } catch (Exception ex) {
-            System.err.println(ex);
-        }
-    }
+			String createCountriesTable = "CREATE TABLE countries (Name VARCHAR(255), AlphaTwoCode VARCHAR(2))";
+			statement.executeUpdate(createCountriesTable);
+
+			System.out.println("\nDatabase initialization completed.");
+		} catch (Exception ex) {
+			System.err.println(ex);
+		}
+
+	}
 
 	private static void fetchDataFromAPI() {
+		
+		try {
+			// Create a URL object for the API endpoint
+			URL url = new URL("http://universities.hipolabs.com/search?country=Oman");
 
+			// Open a connection to the API endpoint
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+
+			// Read the response from the API endpoint
+			BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String inputLine;
+			StringBuffer response = new StringBuffer();
+			while ((inputLine = in.readLine()) != null) {
+				response.append(inputLine);
+			}
+			in.close();
+
+			// Print the response from the API endpoint
+			System.out.println(response.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	private static void fetchDataFromDatabase() {
